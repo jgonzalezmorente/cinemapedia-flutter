@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
@@ -74,7 +75,10 @@ class _Slide extends StatelessWidget {
                   decoration: BoxDecoration( color: Colors.black12 )
                 );
               }
-              return FadeIn( child: child );
+              return GestureDetector(
+                onTap: () => context.push( '/movie/${ movie.id }' ),
+                child: FadeIn( child: child )
+              );
             },
           )
         ),

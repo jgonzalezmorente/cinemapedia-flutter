@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/config/helpers/human_formats.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MovieHorizontalListView extends StatefulWidget {
 
@@ -31,12 +32,9 @@ class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
     super.initState();
     scrollController.addListener(() {
       if ( widget.loadNextPage == null ) return;
-
       if ( scrollController.position.pixels + 200 >= scrollController.position.maxScrollExtent ) {        
         widget.loadNextPage!();
       }
-
-
     });    
   }
 
@@ -109,7 +107,11 @@ class _Slide extends StatelessWidget {
                       ),
                     );
                   }
-                  return FadeIn(child: child);
+                  return GestureDetector(
+                    child: FadeIn(child: child),
+                    onTap: () => context.push( '/movie/${ movie.id }' ),
+                  );
+                  
                 },
               ),
             ),

@@ -48,14 +48,12 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
     final popularMovies = ref.watch( popularMoviesProvider );
     final topRatedMovies = ref.watch( topRatedMoviesProvider );
-    final upcomingMovies = ref.watch( upcomingMoviesProvider );    
+    final upcomingMovies = ref.watch( upcomingMoviesProvider );        
 
     return CustomScrollView(
-
       slivers: [
-
         const SliverAppBar(
-          floating: true,
+          floating: true,          
           flexibleSpace: FlexibleSpaceBar(
             title: CustomAppBar(),
           ),
@@ -99,15 +97,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
               ]
             );
           },
-          childCount: 1
-        ) )
-      ]
-      
+          childCount: 1 )
+        )
+      ]     
     );
-
-
-
-
-
   }
 }
