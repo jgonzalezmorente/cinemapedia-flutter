@@ -89,7 +89,7 @@ class _Slide extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           
-          //* Image
+          // Image
           SizedBox(
             width: 150,
             child: ClipRRect(
@@ -119,7 +119,7 @@ class _Slide extends StatelessWidget {
 
           const SizedBox( height: 5 ),
 
-          //* Title
+          // Title
           SizedBox(
             width: 150,
             child: Text(
@@ -129,7 +129,7 @@ class _Slide extends StatelessWidget {
             )
           ),
 
-          //* Rating
+          // Rating
           SizedBox(
             width: 150,
             child: Row(
