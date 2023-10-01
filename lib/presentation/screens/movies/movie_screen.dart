@@ -192,7 +192,14 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
-class _CustomSliverAppBar extends StatelessWidget {
+// !family -> permite pasar parámetros al provider (familia de providers)
+// !autoDispose -> los recursos asignados al provider se desechan cuando ya no sean necesarios (se destruya el widget)
+final isFavoriteProvider = FutureProvider.family.autoDispose(( ref, int movieId ) {
+  final localStorageRepository = ref.read( localStorageRepositoryProvider );
+  return localStorageRepository.isMovieFavorite( movieId );
+});
+
+class _CustomSliverAppBar extends ConsumerWidget {
 
   final Movie movie;
 
@@ -201,9 +208,10 @@ class _CustomSliverAppBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref ) {    
     
     final size = MediaQuery.of( context ).size;
+    final isFavoriteFuture = ref.watch( isFavoriteProvider( movie.id ) );
 
     return SliverAppBar(
       backgroundColor: Colors.black,      
@@ -211,11 +219,19 @@ class _CustomSliverAppBar extends StatelessWidget {
       foregroundColor: Colors.white,
       actions: [
         IconButton(
-          onPressed: () {
-          // TODO: Realizar el toggle  
+          onPressed: () async {
+            await ref.read( localStorageRepositoryProvider ).toggleFavorite( movie );          
+            
+            //! invalidate -> refresca el provider y lo devuelve a su estado inicial 
+            ref.invalidate( isFavoriteProvider( movie.id ) );
         }, 
-        icon: const Icon( Icons.favorite_border )
-        // icon: const Icon( Icons.favorite_rounded, color: Colors.red )
+        icon: isFavoriteFuture.when(
+          loading: () => const CircularProgressIndicator( strokeWidth: 2 ),
+          data: ( isFavorite ) => isFavorite 
+            ? const Icon( Icons.favorite_rounded, color: Colors.red )
+            : const Icon( Icons.favorite_border ), 
+          error: (_, __) => throw UnimplementedError(), 
+        )
         )
       ],
       flexibleSpace: FlexibleSpaceBar(
