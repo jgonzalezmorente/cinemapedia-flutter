@@ -3,36 +3,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:cinemapedia/presentation/widgets/widgets.dart';
 
-
 class HomeView extends ConsumerStatefulWidget {
-  const HomeView({super.key});
+  const HomeView({ super.key });
 
   @override
   HomeViewState createState() => HomeViewState();
 }
 
-class HomeViewState extends ConsumerState<HomeView> {
+class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClientMixin {
 
   @override
   void initState() {
-    super.initState();
-    ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
-    ref.read( popularMoviesProvider.notifier ).loadNextPage();
+    super.initState();    
+    ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();    
     ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
     ref.read( upcomingMoviesProvider.notifier ).loadNextPage();
   }
 
   @override
-  Widget build( BuildContext context ) {
+  Widget build( BuildContext context ) {    
+    super.build(context);
 
     final initialLoading = ref.watch( initialLoadingProvider );
     if ( initialLoading ) return const FullScreenLoader();
 
-    final slideShowMovies = ref.watch( moviesSlideshowProvider );
+    final slideShowMovies  = ref.watch( moviesSlideshowProvider );
     final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
-    final popularMovies = ref.watch( popularMoviesProvider );
-    final topRatedMovies = ref.watch( topRatedMoviesProvider );
-    final upcomingMovies = ref.watch( upcomingMoviesProvider );        
+    final topRatedMovies   = ref.watch( topRatedMoviesProvider );
+    final upcomingMovies   = ref.watch( upcomingMoviesProvider );        
 
     return CustomScrollView(
       slivers: [
@@ -65,12 +63,6 @@ class HomeViewState extends ConsumerState<HomeView> {
                 ),
 
                 MovieHorizontalListView(
-                  movies: popularMovies,
-                  title: 'Populares',
-                  loadNextPage: ref.read( popularMoviesProvider.notifier ).loadNextPage
-                ),
-
-                MovieHorizontalListView(
                   movies: topRatedMovies,
                   title: 'Mejor calificadas',
                   subTitle: 'Desdese siempre',
@@ -86,4 +78,7 @@ class HomeViewState extends ConsumerState<HomeView> {
       ]     
     );
   }
+  
+  @override  
+  bool get wantKeepAlive => true;
 }

@@ -27,7 +27,6 @@ class CustomAppBar extends ConsumerWidget {
               Text( 'Cinemapedia', style: titleStyle ),              
               const Spacer(),              
               IconButton(onPressed: () {
-                
                 final searchQuery = ref.read( searchQueryProvider );
                 final searchMovies = ref.read( searchMoviesProvider );
 
@@ -43,9 +42,7 @@ class CustomAppBar extends ConsumerWidget {
                   context.push( '/home/0/movie/${ movie.id }' );
                 });
               }, 
-
-              icon: const Icon( Icons.search )
-              )
+              icon: const Icon( Icons.search ))
             ],
           ),
         ),

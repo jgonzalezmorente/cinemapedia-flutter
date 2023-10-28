@@ -1,5 +1,6 @@
 import 'package:cinemapedia/domain/datasources/movie_datasource.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
+import 'package:cinemapedia/domain/entities/video.dart';
 import 'package:cinemapedia/domain/repositories/movie.repository.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
@@ -35,5 +36,15 @@ class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<List<Movie>> searchMovies( String query ) {
     return datasource.searchMovies( query );
+  }
+
+  @override
+  Future<List<Movie>> getSimilarMovies( int movieId ) {
+    return datasource.getSimilarMovies( movieId );
+  }
+
+  @override
+  Future<List<Video>> getYoutubbeVideosById( int movieId ) {
+    return datasource.getYoutubbeVideosById( movieId );
   }
 }

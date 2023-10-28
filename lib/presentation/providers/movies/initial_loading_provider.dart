@@ -5,7 +5,7 @@ final initialLoadingProvider = Provider<bool>( ( ref ) {
 
   final movieProviders = [
     ref.watch( nowPlayingMoviesProvider ),
-    ref.watch( popularMoviesProvider ),
+    // ref.watch( popularMoviesProvider ),
     ref.watch( topRatedMoviesProvider ),
     ref.watch( upcomingMoviesProvider ),
   ];
